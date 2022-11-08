@@ -16,16 +16,22 @@ def connecting(db_name):
     return db
 
 #데이터 넣기, 입력값 // db = 데이터베이스, df = 데이터프레임
-def insert_replace(db,df,tbl,foreign_key_checks = False):
-    """_summary_
+def insert_sql(db, df, tbl, mode, foreign_key_checks = True):
+    """
+    replace into를 이용하여 데이터를 업데이트 한다.
 
     Args:
         db (pymysql.connect): 연결된 db
         df (pd.DataFrame): input 데이터 프레임
-        tbl (_type_): _description_
+        tbl (str): 테이블 이름
+        mode (str): 입력 모드 replace, ignore
         foreign_key_checks (bool, optional): _description_. Defaults to False.
     """    
-    if foreign_key_checks:
+    if mode == 'replace':
+        sql = f'replace into {tbl} values '
+    elif mode == 'ignore':
+        sql = f'insert ignore into {tbl} values '
+    if foreign_key_checks == False:
         with db.cursor() as cursor:
             cursor.execute('SET foreign_key_checks=0')
     df_list = df.values.tolist()
@@ -41,10 +47,11 @@ def insert_replace(db,df,tbl,foreign_key_checks = False):
             tmp = '(' + ', '.join(value) + ')'
             sql_list.append(tmp)
     
-        sql = f'replace into {tbl} values ' + ', '.join(sql_list)
+        sql +=  ', '.join(sql_list)
         with db.cursor() as cursor:
             cursor.execute(sql)
-    if foreign_key_checks:
+    if foreign_key_checks == False:
         with db.cursor() as cursor:
             cursor.execute('SET foreign_key_checks=1')
     db.commit()
+    
