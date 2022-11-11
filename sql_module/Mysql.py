@@ -1,3 +1,6 @@
+"""
+mysql_control
+"""
 import pymysql
 import os
 class Mysql(pymysql.connections.Connection):

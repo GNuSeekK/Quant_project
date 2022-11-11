@@ -1,11 +1,11 @@
-import sql_module.mysql_control
+import sql_module
 import pandas as pd
 import requests
 from bs4 import BeautifulSoup
 import Keesung_logging
 from tqdm import tqdm
 
-db = sql_module.mysql_control.Mysql('quantdb')
+db = sql_module.Mysql('quantdb')
 
 code_list = pd.read_sql('SELECT c_code FROM comtbl', db)['c_code'].tolist()
 logger = Keesung_logging.my_logger()

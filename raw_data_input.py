@@ -1,7 +1,7 @@
 import pandas as pd
-import sql_module.mysql_control
+import sql_module
 
-db = sql_module.mysql_control.Mysql('quantdb')
+db = sql_module.Mysql('quantdb')
 df = pd.read_excel(r'C:\Users\user\Desktop\All_git\Quant_project\데이터.xlsx')
 
 # 데이터 정리

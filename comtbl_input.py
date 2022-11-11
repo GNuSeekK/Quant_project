@@ -1,9 +1,9 @@
-import sql_module.mysql_control
+import sql_module
 import pandas as pd
 import datetime as dt
 import requests
 import quant_infos.wics_code
-db = sql_module.mysql_control.connecting('quantdb')
+db = sql_module.Mysql('quantdb')
 
 wics_mc = quant_infos.wics_code.wics_mc
 wics_lc = quant_infos.wics_code.wics_lc
@@ -37,4 +37,4 @@ for wics_code in wics_mc.keys():
 
 df = "'" + df + "'"
 
-sql_module.mysql_control.insert_sql(db, df, 'comtbl', 'replace', foreign_key_checks = False)
+db.insert_sql(df, 'comtbl', 'replace', foreign_key_checks = False)
