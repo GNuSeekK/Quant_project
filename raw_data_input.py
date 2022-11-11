@@ -1,7 +1,7 @@
 import pandas as pd
 import sql_module.mysql_control
 
-db = sql_module.mysql_control.connecting('quantdb')
+db = sql_module.mysql_control.Mysql('quantdb')
 df = pd.read_excel(r'C:\Users\user\Desktop\All_git\Quant_project\데이터.xlsx')
 
 # 데이터 정리
@@ -16,4 +16,4 @@ df = df.drop('Name', axis=1)
 
 # foreign key check 설정을 true로 해두었으므로, 먼저 comtbl 업데이트 필요
 # rawtbl 업데이트 해준다.
-sql_module.mysql_control.insert_sql(db, df, 'rawtbl', 'replace')
+db.insert_sql(df, 'rawtbl', 'replace')
