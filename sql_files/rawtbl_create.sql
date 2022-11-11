@@ -6,7 +6,7 @@ CREATE TABLE rawtbl (
     assets BIGINT NOT NULL,
     assets_aver BIGINT NOT NULL,
     current_assets BIGINT NOT NULL,
-    inventories BIGINT NOT NULL,
+    inventories BIGINT NOT NULL, # 재고자산
     non_current_assets BIGINT NOT NULL, # 비유동자산
     tangible_assets BIGINT NOT NULL, # 유형자산
     intangible_assets BIGINT NOT NULL, # 무형자산
