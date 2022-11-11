@@ -9,7 +9,7 @@ import pandas as pd
 class Mysql(pymysql.connections.Connection):
     
     def __init__(self, db_name: str):
-        path = 'db_info.txt'
+        path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'db_info.txt')
         f = open(path)
         id, pw, host = f.read().split()
         super().__init__(
