@@ -1,11 +1,14 @@
 """
-mysql_control
+Mysql
+
+insert_sql : 5000개씩 bulk insert 수행 (입력값 pd.Dataframe) 
 """
 import pymysql
 import os
+import pandas as pd
 class Mysql(pymysql.connections.Connection):
     
-    def __init__(self, db_name):
+    def __init__(self, db_name: str):
         path = 'db_info.txt'
         f = open(path)
         id, pw, host = f.read().split()
@@ -19,7 +22,7 @@ class Mysql(pymysql.connections.Connection):
             cursorclass = pymysql.cursors.DictCursor
         )
         
-    def insert_sql(self, df, tbl, mode, foreign_key_checks = True):
+    def insert_sql(self, df: pd.DataFrame, tbl: str, mode: str, foreign_key_checks: bool=True):
         """
         replace into를 이용하여 데이터를 업데이트 한다.
 
@@ -27,7 +30,7 @@ class Mysql(pymysql.connections.Connection):
             df (pd.DataFrame): input 데이터 프레임
             tbl (str): 테이블 이름
             mode (str): 입력 모드 replace, ignore
-            foreign_key_checks (bool, optional): _description_. Defaults to False.
+            foreign_key_checks (bool, optional): 외래키 체크 옵션 (True면 체크 한다). Defaults to True.
         """    
         if mode == 'replace':
             sql = f'replace into {tbl} values '
